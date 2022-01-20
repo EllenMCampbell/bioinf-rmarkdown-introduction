@@ -42,7 +42,9 @@ knitr::include_graphics("images/Sassy.jpg", auto_pdf = TRUE)
 
 I really enjoy the more trouble-shooting/practical work that we do in the lab. 
 I’m less invested in a particular topic, and generally enjoy the more specific 
-questions we approach in lab. I've really enjoyed being part of the lab’s transition 
+questions we approach in lab, like why a specific protocol has stopped working, 
+or how do we assess the quality of genotypes for types of genotyping data that we
+havne't generated before. I've really enjoyed being part of the lab’s transition 
 towards sequencing-based genotyping.  I've loved getting to handle GTseq data and 
 the sneak peaks I got into the development of the snakemake pipeline and am really 
 excited about our current dive into whole genome sequencing runs!
@@ -104,11 +106,20 @@ off the web.
 
 ## What I hope to get out of this class
 
-Give me a bullet list of three things:
+Three things I'd like to get out of this class
 
-* This
-* That
-* Another
+* Hone my R and UNIX skills.  I've used both enough now that I feel comfortable 
+working in both settings, but I know there's so much more they can do that I just 
+don't know of yet so excited to learn more things about what I can do with them!
+* Become more comfortable on computing clusters and with SLURM.  This was probably
+the part of the last class that I struggled with the most, and I haven't used it 
+much since then, so hoping I can become more comfortable just working in that 
+environment.
+* Get motivated to tackle new problems! Last class definitely motivated me to find
+new ways of tackling new problems (like how do we generate a reference VCF for coho
+in an organized/thoughtful fashion; what bits of excel plugins are breaking and how
+can we rewrite them in R (which ultimately drove me to learn how to try to start 
+fixing them with python))
 
 # Evaluating some R code
 
