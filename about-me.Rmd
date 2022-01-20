@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-author: "Insert Name Here"
+author: "Ellen Campbell"
 output:
   html_document:
     toc: yes
@@ -13,28 +13,30 @@ bibliography: references.bib
 
 # Who I am and where I came from
 
-First off, replace "Insert Name Here" in the YAML header with your name.
-It has to be surrounded by double quotation marks. 
-Briefly tell us a little background about yourself, and how
-you ended up becoming a student at CSU and taking this class.
-Put in a hypertext link to your undergraduate institution.  
+I grew up in a small farm town near UC Davis.  When I was about three I watched a
+PBS Nature program called "Incredible Suckers" on cephalopods and decided then
+and there that I wanted to study squid when I grew up.  As I learned more, my interests
+broadened to math and science in general (although I still love squid!).  I attended 
+[UC Santa Cruz](https://www.ucsc.edu/), and while I toyed with the idea of majoring 
+in math, I ultimately majored in biology with a minor in applied math and statistics.  
+When I graduated in 2014, I joined Carlos Garza’s lab as one of his three full time 
+lab staff. I attended Eric's version of this class two years ago and found it super
+interesting and incredibly helpful for honing my UNIX/terminal and R skills and 
+getting a deeper understanding of our sequencing processing pipeline.
 
-Include a numbered list of your top-four favorite leisure activities, like this:
+When I'm not working, I love to:
 
-1. My favorite
-1. Second favorite
-1. third favorite
-1. fourth favorite
+1. Bake whatever interesting new food experiments I can find
+1. Brew beers, ciders, and mead with Akshar
+1. Go hiking!
+1. Knit
 
+Here's a picture of my adorable cat, since apparently the only photos I have on my 
+computer right now are of her
 
-Include a picture (jpg or png) of yourself, to get some practice in inserting
-images into RMarkdown. See the example to see how that can be done.
-Note that JPEGs that include EXIF information might be incorrectly rotated.
-That is OK if you can't figure out how to fix it.
-
-
-
-
+```{r me_pic, echo=FALSE, out.width="500px"}
+knitr::include_graphics("images/Sassy.jpg", auto_pdf = TRUE)
+```
 
 # Research Interests
 
