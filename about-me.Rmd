@@ -40,7 +40,12 @@ knitr::include_graphics("images/Sassy.jpg", auto_pdf = TRUE)
 
 # Research Interests
 
-Brief description of your research interests.
+I really enjoy the more trouble-shooting/practical work that we do in the lab. 
+I’m less invested in a particular topic, and generally enjoy the more specific 
+questions we approach in lab. I've really enjoyed being part of the lab’s transition 
+towards sequencing-based genotyping.  I've loved getting to handle GTseq data and 
+the sneak peaks I got into the development of the snakemake pipeline and am really 
+excited about our current dive into whole genome sequencing runs!
 
 ## Influential papers
 
