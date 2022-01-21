@@ -16,7 +16,7 @@ bibliography: references.bib
 I grew up in a small farm town near UC Davis.  When I was about three I watched a
 PBS Nature program called "Incredible Suckers" on cephalopods and decided then
 and there that I wanted to study squid when I grew up.  As I learned more, my interests
-broadened to math and science in general (although I still love squid!).  I attended 
+broadened to a general love of math and science (although I still love squid!).  I attended 
 [UC Santa Cruz](https://www.ucsc.edu/), and while I toyed with the idea of majoring 
 in math, I ultimately majored in biology with a minor in applied math and statistics.  
 When I graduated in 2014, I joined Carlos Garza’s lab as one of his three full time 
@@ -44,7 +44,7 @@ I really enjoy the more trouble-shooting/practical work that we do in the lab.
 I’m less invested in a particular topic, and generally enjoy the more specific 
 questions we approach in lab, like why a specific protocol has stopped working, 
 or how do we assess the quality of genotypes for types of genotyping data that we
-havne't generated before. I've really enjoyed being part of the lab’s transition 
+haven't generated before. I've really enjoyed being part of the lab’s transition 
 towards sequencing-based genotyping.  I've loved getting to handle GTseq data and 
 the sneak peaks I got into the development of the snakemake pipeline and am really 
 excited about our current dive into whole genome sequencing runs!
@@ -98,11 +98,115 @@ $$
 
 ## My computing experience
 
-Describe any experience you have with any programming languages.
-Include a snippet of code in two different languages using a
-non-evaluated code block.  This can be something you have previously
-written, or, if you don't have any, then find and copy a few lines of code
-off the web.
+I've been using R since my undergrad days, but was only introduced to the tidyverse
+world of R after I graduated.  I find it immensely useful for stripping through 
+data and checking for common issues (assessing sample/genotype quality; assessing
+assay/reagent success) and less common issues (like the whole 9D debocle).  
+
+Here's an ugly loopy chunk of R code that I want to rewrite in a tidier format, but
+every time I try, it slows things down!
+```
+#This input has a sample name column with a unique ID--lower the ID, the earlier the sample was run
+#I'll be arranging by sample name so that for each rerun, the earlier run comes first.  You could arrange by run number, total number of reads, etc.  Just make sure col 1 = NMFS_ID, col 2 = what to sort reruns on, col3+ = genotypes
+genotypes <- as.data.frame(Together)
+#Create a vector containing each of the sample names only once
+samples <- as.vector(unique(genotypes[ , 1]))
+#Create a matrix to hold all of the consensus genotypes and the sample names
+consensus <- matrix(nrow = length(samples), ncol = (length(genotypes[1, ])+1)/2)
+#set the first column to be the sample names
+consensus[ , 1] <- samples
+#Start looping over samples
+for (i in c(1:length(samples))){
+  #Find the indicies for the two runs of sample i
+  indicies <- c(1:length(genotypes[,1]))[genotypes[ , 1] == samples[i]]
+  #Start looping over assays (increment by 2 as there are two columns per assay)
+  for (j in seq.int(3, length(genotypes[1, ]), 2)){
+    #We'll be comparing sums of the two columns to make things easy, so calculate the sums
+    a <- genotypes[indicies[1], j]+genotypes[indicies[1], j+1]
+    b <- genotypes[indicies[2], j]+genotypes[indicies[2], j+1]
+    #If the two runs result in the same genotype note as "S" (same), if mismatched note as 
+    #"M" (mismatch), if one nocalled but other called note as "L" (loss)
+    if (a==b){
+      consensus[i,((j/2)+1)] <- "S"
+    } else if (a == 0){
+      consensus[i,((j/2)+1)] <- "C"
+    } else if (b == 0){
+      consensus[i,((j/2)+1)] <- "L"
+    } else if (genotypes[indicies[1], j]==genotypes[indicies[1], j+1]){
+      if (genotypes[indicies[2], j]==genotypes[indicies[2], j+1]){
+        consensus[i,((j/2)+1)] <- "XXtoYY"
+      } else {
+        consensus[i,((j/2)+1)] <- "XXtoXY"
+      }
+    } else if (genotypes[indicies[2], j]==genotypes[indicies[2], j+1]){
+      consensus[i,((j/2)+1)] <- "XYtoXX"
+    } else if (sum(genotypes[indicies[1], c(j, j+1)] %in% genotypes[indicies[2], c(j, j+1)]) > 0){
+      consensus[i,((j/2)+1)] <- "XYtoXZ"
+    } else {
+      consensus[i,((j/2)+1)] <- "XYtoWZ"
+    }
+  }
+}
+
+#Store the consensus score matrix as a data frame
+consensus <- as.data.frame(consensus)
+#Set the names of the columns to be the same names as the assays
+names(consensus) <- names(genotypes)[c(1, seq(3, length(genotypes[1, ]), 2))]
+#Write to file
+#write.csv(consensus, file = "Differences.csv", row.names = F)
+```
+
+I've been slowly dipping my toes into python programming over the past couple years.
+I was briefly introduced in my undergrad years, but only formally started learning 
+in the past two years.  I've found it's useful for automating bits of our lab process
+(like merging metadata files with the code I've written below to replace our RDBMerge
+excel plugin which, sadly, has ceased working)
+
+```
+#Let's see if we can write a script that pulls the metadata we need out of
+#metadata excel files
+
+#Pull in libraries needed
+import pandas as pd
+import os
+
+#Avoid truncating long numbers by setting float format to display 12 digits
+pd.options.display.float_format = "{:.12f}".format
+
+#Find all the files in the current directory
+files = sorted([file for file in os.listdir("./") if file.endswith(('.xlsm', '.xlsx', '.xls'))])
+
+#Read in files!!
+
+#Initialize data frame to hold merged metadata
+Repository = pd.DataFrame()
+Freshwater = pd.DataFrame()
+Marine = pd.DataFrame()
+
+
+#Loop over files
+for file in files:
+    #Read in repo data
+    AllTabs = pd.read_excel(file, sheet_name = ["Repository","Freshwater", "Marine"], index_col = 0)
+    Repository = pd.concat([Repository,AllTabs["Repository"]])
+    Freshwater = pd.concat([Freshwater,AllTabs["Freshwater"]])
+    Marine = pd.concat([Marine,AllTabs["Marine"]])
+
+
+writer = pd.ExcelWriter("Merged.xlsx", engine = 'openpyxl')
+Repository.to_excel(writer, sheet_name = 'Repository', index = True, header = True)
+Freshwater.to_excel(writer, sheet_name = 'Freshwater', index = True, header = True)
+Marine.to_excel(writer, sheet_name = 'Marine', index = True, header = True)
+writer.save()
+writer.close()
+```
+
+I've been intermittently working on a python script that I'm hoping will eventually
+replace the microsatellite toolkit plugin in excel, which I'm worried may not work
+on our computers for much longer.  I've currently stalled on reformatting genotype
+data into genepop format since apparently the original mstoolkit did not do this
+entirely correctly, but I'll try to pick this up again the next time I have a lull
+in lab work.
 
 ## What I hope to get out of this class
 
