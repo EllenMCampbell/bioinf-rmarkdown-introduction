@@ -2,10 +2,6 @@
 title: "About Me"
 author: "Ellen Campbell"
 output:
-  html_document:
-    toc: yes
-  word_document:
-    toc: yes
   pdf_document:
     toc: yes
 bibliography: references.bib
