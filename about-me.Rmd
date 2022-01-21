@@ -2,10 +2,6 @@
 title: "About Me"
 author: "Ellen Campbell"
 output:
-  html_document:
-    toc: yes
-  word_document:
-    toc: yes
   pdf_document:
     toc: yes
 bibliography: references.bib
@@ -17,12 +13,9 @@ I grew up in a small farm town near UC Davis.  When I was about three I watched 
 PBS Nature program called "Incredible Suckers" on cephalopods and decided then
 and there that I wanted to study squid when I grew up.  As I learned more, my interests
 broadened to a general love of math and science (although I still love squid!).  I attended 
-[UC Santa Cruz](https://www.ucsc.edu/), and while I toyed with the idea of majoring 
-in math, I ultimately majored in biology with a minor in applied math and statistics.  
-When I graduated in 2014, I joined Carlos Garza’s lab as one of his three full time 
-lab staff. I attended Eric's version of this class two years ago and found it super
-interesting and incredibly helpful for honing my UNIX/terminal and R skills and 
-getting a deeper understanding of our sequencing processing pipeline.
+[UC Santa Cruz](https://www.ucsc.edu/), and graduated in 2014 with a B.S in biology and a 
+minor in applied math and statistics. I joined Carlos Garza’s lab as one of his three full time 
+lab staff immediately after I graduated and have been working there ever since.
 
 When I'm not working, I love to:
 
@@ -51,50 +44,23 @@ excited about our current dive into whole genome sequencing runs!
 
 ## Influential papers
 
-Describe two papers that have been very influential in your
-research.  The main purpose of this is learning how to
-cite literature in RMarkdown.  You will have to add the citations
-to `references.bib` in BibTeX format, and then also cite them.
-
-An easy way to get the paper in BibTeX format is to find it on
-Google Scholar.  Then, under the paper's link, click on the big 
-fat quotation marks, and then choose the BibTex link at the bottom
-of the page.  Then copy the contents into `references.bib`.  For example
-you might paste this into `references.bib`.
-```
-@article{richardson1997bayesian,
-  title={On Bayesian analysis of mixtures with an unknown number of components (with discussion)},
-  author={Richardson, Sylvia and Green, Peter J},
-  journal={Journal of the Royal Statistical Society: series B (statistical methodology)},
-  volume={59},
-  number={4},
-  pages={731--792},
-  year={1997},
-  publisher={Wiley Online Library}
-}
-```
-Note the string before the comma on the first line.  That is the cite key.
-Once you have done that, you can cite it by including `@richardson1997bayesian`
-if you don't want the name in parenthesis, like, "As @richardson1997bayesian introduced in
-their landmark paper."  On the other hand, you can use `[@richardson1997bayesian]` if
-you do want it all in parentheses, like, "Reversible jump MCMC has been previously applied
-to the analysis of mixtures [@richardson1997bayesian]."
+Diving back into more GTseq [@campbell2014GTseq] stuff in lab work this week. 
+I need to get back into Coho VCF stuff.  Diana demonstrated with the work in her
+paper @Baetscher2017Microhaplotypes that microhaplotype loci have higher power 
+for relationship inference. We have an existing VCF that's been working really well
+for relationship inference (as far as I've hear from Libby), but we're trying to
+add additional variants so it can serve as species ID between salmonids as well.  
 
 
 ## The mathematics behind my research
 
-It is easy to write complex mathematics using a mathematical typesetting
-engine called TeX.  Write two displayed equations that are relevant
-to your work.  For a quick primer on TeX and LaTeX you can
-download [this cheatsheet](https://users.dickinson.edu/~richesod/latex/latexcheatsheet.pdf)
-and then fiddle with including things between the double dollar signs below:
+This is a perpetually useful formula:
+
 $$
-\cos\theta + i\sin\theta = e^{i\theta}
+C_1 V_1 = C_2V_2
 $$
-or here:
-$$
-\lim_{n\rightarrow \infty} \frac{1}{n}\sum_{i=1}^n X_i = EX
-$$
+
+Write another one here if time...
 
 ## My computing experience
 
@@ -227,10 +193,16 @@ fixing them with python))
 
 # Evaluating some R code
 
-Here, please evaluate some R code to make a plot or a figure.
-The goal here is just to realize that you can imbed R code
-within fenced code blocks and get the output rendered into
-the document.
+Here's some R code:
+
+```{r}
+library(tidyverse)
+silly <- read_delim("references.bib", delim = "\n", col_names = FALSE)
+silly_CountByLine <- mutate(silly, "line_length" = nchar(X1))
+
+ggplot(silly_CountByLine, aes(x = line_length)) + geom_histogram(bins = 10)
+```
+
 
 # Citations
 
