@@ -65,7 +65,16 @@ $$
 C_1 V_1 = C_2V_2
 $$
 
-Write another one here if time...
+And I don't know.  Here's the equation for PIC from @botstein1980PIC that I had 
+to look up how to calculate for my ongoing attempt to convert MS toolkit into a
+python script before excel kills our ability to load in any useful add-ins.  We 
+ultimately decided we don't really use this and should just keep the heterozygosity 
+calculations from the tab that this appears in, and not bother with calculating this.
+
+$$
+PIC = 1 - {\sum_{i=1}^{n}{p_i^2}} - \sum_{i=1}^{n-1}\sum_{j=i+1}^{n}{2p_i^2p_j^2}
+$$
+
 
 ## My computing experience
 
