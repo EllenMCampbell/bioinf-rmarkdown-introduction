@@ -49,11 +49,12 @@ excited about our current dive into whole genome sequencing runs!
 ## Influential papers
 
 Diving back into more GTseq [@campbell2014GTseq] stuff in lab work this week. 
-I need to get back into Coho VCF stuff.  Diana demonstrated with the work in her
-paper @Baetscher2017Microhaplotypes that microhaplotype loci have higher power 
-for relationship inference. We have an existing VCF that's been working really well
-for relationship inference (as far as I've hear from Libby), but we're trying to
-add additional variants so it can serve as species ID between salmonids as well.  
+We're testing out halving reactions to see if we can still get reasonable results
+using significantly less mastermix.  I also need to get back into Coho VCF stuff. 
+Diana demonstrated with the work in her paper @Baetscher2017Microhaplotypes that 
+microhaplotype loci have higher power for relationship inference. While we've found
+that our microhap panel has been working well for relationship inference, we want
+to add additional variants so we can try to use our panel for species ID as well.
 
 
 ## The mathematics behind my research
@@ -71,11 +72,11 @@ Write another one here if time...
 I've been using R since my undergrad days, but was only introduced to the tidyverse
 world of R after I graduated.  I find it immensely useful for stripping through 
 data and checking for common issues (assessing sample/genotype quality; assessing
-assay/reagent success) and less common issues (like the whole 9D debocle).  
+assay/reagent success) and less common issues (like the whole 9D debacle).  
 
 Here's an ugly loopy chunk of R code that I want to rewrite in a tidier format, but
 every time I try, it slows things down!
-```
+``` {r eval = FALSE}
 #This input has a sample name column with a unique ID--lower the ID, the earlier the sample was run
 #I'll be arranging by sample name so that for each rerun, the earlier run comes first.  You could arrange by run number, total number of reads, etc.  Just make sure col 1 = NMFS_ID, col 2 = what to sort reruns on, col3+ = genotypes
 genotypes <- as.data.frame(Together)
@@ -132,7 +133,7 @@ in the past two years.  I've found it's useful for automating bits of our lab pr
 (like merging metadata files with the code I've written below to replace our RDBMerge
 excel plugin which, sadly, has ceased working)
 
-```
+```{py eval = FALSE}
 #Let's see if we can write a script that pulls the metadata we need out of
 #metadata excel files
 
@@ -178,6 +179,14 @@ data into genepop format since apparently the original mstoolkit did not do this
 entirely correctly, but I'll try to pick this up again the next time I have a lull
 in lab work.
 
+I've been wandering around computers in the terminal just about as long as I've
+been using R.  While I'm firmly a Windows user at home, I am way more comfortable
+in a UNIX setting when it comes to terminal things.  I'm pretty comfortable 
+navigating through file systems; making, copying, moving, and deleting files; and 
+opening/launching programs via the command line.  That said, I know there's a lot 
+more I can do in the terminal (particularly with sed/awk/grep) that I don't know 
+a whole lot about, but would like to get better at.
+
 ## What I hope to get out of this class
 
 Three things I'd like to get out of this class
@@ -197,7 +206,7 @@ fixing them with python))
 
 # Evaluating some R code
 
-Here's some R code:
+Here's some silly R code:
 
 ```{r}
 library(tidyverse)
@@ -205,6 +214,14 @@ silly <- read_delim("references.bib", delim = "\n", col_names = FALSE)
 silly_CountByLine <- mutate(silly, "line_length" = nchar(X1))
 
 ggplot(silly_CountByLine, aes(x = line_length)) + geom_histogram(bins = 10)
+```
+
+While we're in here, let's display our silly data as a table:
+```{r}
+silly_CountByLine <- silly_CountByLine %>%
+  mutate(line_number = seq(1:n()))
+knitr::kable(select(silly_CountByLine, line_number, line_length),
+             caption = "Silly Data Table")
 ```
 
 
